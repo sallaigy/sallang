@@ -1,0 +1,1312 @@
+Terminals unused in grammar
+
+   T_IS_GTEQ
+   T_IS_LTEQ
+   "string literal (T_STRING_LITERAL)"
+   T_CONST
+   T_FUNC
+
+
+State 77 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: start $end
+
+    1 start: program
+
+    2 program: T_LET declaration_list T_IN stmt_list T_END
+
+    3 declaration_list: declaration_list declaration
+    4                 | %empty
+
+    5 declaration: T_VAR id ':' typename ';'
+
+    6 typename: T_INT_TYPE
+    7         | T_DOUBLE_TYPE
+    8         | T_BOOL_TYPE
+
+    9 stmt_list: stmt_list stmt
+   10          | %empty
+
+   11 stmt: '{' stmt_list '}'
+   12     | declaration ';'
+   13     | expr ';'
+   14     | T_PRINT '(' expr ')' ';'
+   15     | if_stmt
+   16     | while_stmt
+
+   17 if_stmt: if_stmt_without_else
+   18        | T_IF '(' expr ')' stmt T_ELSE stmt
+
+   19 if_stmt_without_else: T_IF '(' expr ')' stmt
+
+   20 while_stmt: T_WHILE '(' expr ')' stmt
+
+   21 expr: scalar
+   22     | id
+   23     | '!' expr
+   24     | id '=' expr
+   25     | expr '+' expr
+   26     | expr '-' expr
+   27     | expr '*' expr
+   28     | expr '/' expr
+   29     | expr '%' expr
+   30     | expr T_IS_EQ expr
+   31     | expr T_IS_NOT_EQ expr
+   32     | expr '<' expr
+   33     | expr '>' expr
+   34     | expr T_LOGICAL_AND expr
+   35     | expr T_LOGICAL_OR expr
+   36     | '(' expr ')'
+
+   37 scalar: "integer literal (T_INTEGER_LITERAL)"
+   38       | "double literal (T_DOUBLE_LITERAL)"
+   39       | "boolean literal (T_BOOLEAN_LITERAL)"
+
+   40 id: "identifier (T_IDENTIFIER)"
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 23
+'%' (37) 29
+'(' (40) 14 18 19 20 36
+')' (41) 14 18 19 20 36
+'*' (42) 27
+'+' (43) 25
+'-' (45) 26
+'/' (47) 28
+':' (58) 5
+';' (59) 5 12 13 14
+'<' (60) 32
+'=' (61) 24
+'>' (62) 33
+'{' (123) 11
+'}' (125) 11
+error (256)
+T_LOGICAL_AND (258) 34
+T_LOGICAL_OR (259) 35
+T_IS_EQ (260) 30
+T_IS_NOT_EQ (261) 31
+T_IS_GTEQ (262)
+T_IS_LTEQ (263)
+"integer literal (T_INTEGER_LITERAL)" (264) 37
+"double literal (T_DOUBLE_LITERAL)" (265) 38
+"boolean literal (T_BOOLEAN_LITERAL)" (266) 39
+"string literal (T_STRING_LITERAL)" (267)
+"identifier (T_IDENTIFIER)" (268) 40
+T_INT_TYPE (269) 6
+T_DOUBLE_TYPE (270) 7
+T_BOOL_TYPE (271) 8
+T_LET (272) 2
+T_IN (273) 2
+T_END (274) 2
+T_VAR (275) 5
+T_CONST (276)
+T_PRINT (277) 14
+T_FUNC (278)
+T_IF (279) 18 19
+T_ELSE (280) 18
+T_WHILE (281) 20
+
+
+Nonterminals, with rules where they appear
+
+$accept (42)
+    on left: 0
+start (43)
+    on left: 1, on right: 0
+program (44)
+    on left: 2, on right: 1
+declaration_list (45)
+    on left: 3 4, on right: 2 3
+declaration (46)
+    on left: 5, on right: 3 12
+typename (47)
+    on left: 6 7 8, on right: 5
+stmt_list (48)
+    on left: 9 10, on right: 2 9 11
+stmt (49)
+    on left: 11 12 13 14 15 16, on right: 9 18 19 20
+if_stmt (50)
+    on left: 17 18, on right: 15
+if_stmt_without_else (51)
+    on left: 19, on right: 17
+while_stmt (52)
+    on left: 20, on right: 16
+expr (53)
+    on left: 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36, on right:
+    13 14 18 19 20 23 24 25 26 27 28 29 30 31 32 33 34 35 36
+scalar (54)
+    on left: 37 38 39, on right: 21
+id (55)
+    on left: 40, on right: 5 22 24
+
+
+State 0
+
+    0 $accept: . start $end
+
+    T_LET  shift, and go to state 1
+
+    start    go to state 2
+    program  go to state 3
+
+
+State 1
+
+    2 program: T_LET . declaration_list T_IN stmt_list T_END
+
+    $default  reduce using rule 4 (declaration_list)
+
+    declaration_list  go to state 4
+
+
+State 2
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 5
+
+
+State 3
+
+    1 start: program .
+
+    $default  reduce using rule 1 (start)
+
+
+State 4
+
+    2 program: T_LET declaration_list . T_IN stmt_list T_END
+    3 declaration_list: declaration_list . declaration
+
+    T_IN   shift, and go to state 6
+    T_VAR  shift, and go to state 7
+
+    declaration  go to state 8
+
+
+State 5
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 6
+
+    2 program: T_LET declaration_list T_IN . stmt_list T_END
+
+    $default  reduce using rule 10 (stmt_list)
+
+    stmt_list  go to state 9
+
+
+State 7
+
+    5 declaration: T_VAR . id ':' typename ';'
+
+    "identifier (T_IDENTIFIER)"  shift, and go to state 10
+
+    id  go to state 11
+
+
+State 8
+
+    3 declaration_list: declaration_list declaration .
+
+    $default  reduce using rule 3 (declaration_list)
+
+
+State 9
+
+    2 program: T_LET declaration_list T_IN stmt_list . T_END
+    9 stmt_list: stmt_list . stmt
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    T_END                                  shift, and go to state 16
+    T_VAR                                  shift, and go to state 7
+    T_PRINT                                shift, and go to state 17
+    T_IF                                   shift, and go to state 18
+    T_WHILE                                shift, and go to state 19
+    '{'                                    shift, and go to state 20
+    '('                                    shift, and go to state 21
+
+    declaration           go to state 22
+    stmt                  go to state 23
+    if_stmt               go to state 24
+    if_stmt_without_else  go to state 25
+    while_stmt            go to state 26
+    expr                  go to state 27
+    scalar                go to state 28
+    id                    go to state 29
+
+
+State 10
+
+   40 id: "identifier (T_IDENTIFIER)" .
+
+    $default  reduce using rule 40 (id)
+
+
+State 11
+
+    5 declaration: T_VAR id . ':' typename ';'
+
+    ':'  shift, and go to state 30
+
+
+State 12
+
+   23 expr: '!' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 31
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 13
+
+   37 scalar: "integer literal (T_INTEGER_LITERAL)" .
+
+    $default  reduce using rule 37 (scalar)
+
+
+State 14
+
+   38 scalar: "double literal (T_DOUBLE_LITERAL)" .
+
+    $default  reduce using rule 38 (scalar)
+
+
+State 15
+
+   39 scalar: "boolean literal (T_BOOLEAN_LITERAL)" .
+
+    $default  reduce using rule 39 (scalar)
+
+
+State 16
+
+    2 program: T_LET declaration_list T_IN stmt_list T_END .
+
+    $default  reduce using rule 2 (program)
+
+
+State 17
+
+   14 stmt: T_PRINT . '(' expr ')' ';'
+
+    '('  shift, and go to state 32
+
+
+State 18
+
+   18 if_stmt: T_IF . '(' expr ')' stmt T_ELSE stmt
+   19 if_stmt_without_else: T_IF . '(' expr ')' stmt
+
+    '('  shift, and go to state 33
+
+
+State 19
+
+   20 while_stmt: T_WHILE . '(' expr ')' stmt
+
+    '('  shift, and go to state 34
+
+
+State 20
+
+   11 stmt: '{' . stmt_list '}'
+
+    $default  reduce using rule 10 (stmt_list)
+
+    stmt_list  go to state 35
+
+
+State 21
+
+   36 expr: '(' . expr ')'
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 36
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 22
+
+   12 stmt: declaration . ';'
+
+    ';'  shift, and go to state 37
+
+
+State 23
+
+    9 stmt_list: stmt_list stmt .
+
+    $default  reduce using rule 9 (stmt_list)
+
+
+State 24
+
+   15 stmt: if_stmt .
+
+    $default  reduce using rule 15 (stmt)
+
+
+State 25
+
+   17 if_stmt: if_stmt_without_else .
+
+    $default  reduce using rule 17 (if_stmt)
+
+
+State 26
+
+   16 stmt: while_stmt .
+
+    $default  reduce using rule 16 (stmt)
+
+
+State 27
+
+   13 stmt: expr . ';'
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    T_LOGICAL_AND  shift, and go to state 38
+    T_LOGICAL_OR   shift, and go to state 39
+    '<'            shift, and go to state 40
+    '>'            shift, and go to state 41
+    T_IS_EQ        shift, and go to state 42
+    T_IS_NOT_EQ    shift, and go to state 43
+    '+'            shift, and go to state 44
+    '-'            shift, and go to state 45
+    '*'            shift, and go to state 46
+    '/'            shift, and go to state 47
+    '%'            shift, and go to state 48
+    ';'            shift, and go to state 49
+
+
+State 28
+
+   21 expr: scalar .
+
+    $default  reduce using rule 21 (expr)
+
+
+State 29
+
+   22 expr: id .
+   24     | id . '=' expr
+
+    '='  shift, and go to state 50
+
+    $default  reduce using rule 22 (expr)
+
+
+State 30
+
+    5 declaration: T_VAR id ':' . typename ';'
+
+    T_INT_TYPE     shift, and go to state 51
+    T_DOUBLE_TYPE  shift, and go to state 52
+    T_BOOL_TYPE    shift, and go to state 53
+
+    typename  go to state 54
+
+
+State 31
+
+   23 expr: '!' expr .
+   25     | expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    $default  reduce using rule 23 (expr)
+
+
+State 32
+
+   14 stmt: T_PRINT '(' . expr ')' ';'
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 55
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 33
+
+   18 if_stmt: T_IF '(' . expr ')' stmt T_ELSE stmt
+   19 if_stmt_without_else: T_IF '(' . expr ')' stmt
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 56
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 34
+
+   20 while_stmt: T_WHILE '(' . expr ')' stmt
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 57
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 35
+
+    9 stmt_list: stmt_list . stmt
+   11 stmt: '{' stmt_list . '}'
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    T_VAR                                  shift, and go to state 7
+    T_PRINT                                shift, and go to state 17
+    T_IF                                   shift, and go to state 18
+    T_WHILE                                shift, and go to state 19
+    '{'                                    shift, and go to state 20
+    '}'                                    shift, and go to state 58
+    '('                                    shift, and go to state 21
+
+    declaration           go to state 22
+    stmt                  go to state 23
+    if_stmt               go to state 24
+    if_stmt_without_else  go to state 25
+    while_stmt            go to state 26
+    expr                  go to state 27
+    scalar                go to state 28
+    id                    go to state 29
+
+
+State 36
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+   36     | '(' expr . ')'
+
+    T_LOGICAL_AND  shift, and go to state 38
+    T_LOGICAL_OR   shift, and go to state 39
+    '<'            shift, and go to state 40
+    '>'            shift, and go to state 41
+    T_IS_EQ        shift, and go to state 42
+    T_IS_NOT_EQ    shift, and go to state 43
+    '+'            shift, and go to state 44
+    '-'            shift, and go to state 45
+    '*'            shift, and go to state 46
+    '/'            shift, and go to state 47
+    '%'            shift, and go to state 48
+    ')'            shift, and go to state 59
+
+
+State 37
+
+   12 stmt: declaration ';' .
+
+    $default  reduce using rule 12 (stmt)
+
+
+State 38
+
+   34 expr: expr T_LOGICAL_AND . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 60
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 39
+
+   35 expr: expr T_LOGICAL_OR . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 61
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 40
+
+   32 expr: expr '<' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 62
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 41
+
+   33 expr: expr '>' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 63
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 42
+
+   30 expr: expr T_IS_EQ . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 64
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 43
+
+   31 expr: expr T_IS_NOT_EQ . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 65
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 44
+
+   25 expr: expr '+' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 66
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 45
+
+   26 expr: expr '-' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 67
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 46
+
+   27 expr: expr '*' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 68
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 47
+
+   28 expr: expr '/' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 69
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 48
+
+   29 expr: expr '%' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 70
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 49
+
+   13 stmt: expr ';' .
+
+    $default  reduce using rule 13 (stmt)
+
+
+State 50
+
+   24 expr: id '=' . expr
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    '('                                    shift, and go to state 21
+
+    expr    go to state 71
+    scalar  go to state 28
+    id      go to state 29
+
+
+State 51
+
+    6 typename: T_INT_TYPE .
+
+    $default  reduce using rule 6 (typename)
+
+
+State 52
+
+    7 typename: T_DOUBLE_TYPE .
+
+    $default  reduce using rule 7 (typename)
+
+
+State 53
+
+    8 typename: T_BOOL_TYPE .
+
+    $default  reduce using rule 8 (typename)
+
+
+State 54
+
+    5 declaration: T_VAR id ':' typename . ';'
+
+    ';'  shift, and go to state 72
+
+
+State 55
+
+   14 stmt: T_PRINT '(' expr . ')' ';'
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    T_LOGICAL_AND  shift, and go to state 38
+    T_LOGICAL_OR   shift, and go to state 39
+    '<'            shift, and go to state 40
+    '>'            shift, and go to state 41
+    T_IS_EQ        shift, and go to state 42
+    T_IS_NOT_EQ    shift, and go to state 43
+    '+'            shift, and go to state 44
+    '-'            shift, and go to state 45
+    '*'            shift, and go to state 46
+    '/'            shift, and go to state 47
+    '%'            shift, and go to state 48
+    ')'            shift, and go to state 73
+
+
+State 56
+
+   18 if_stmt: T_IF '(' expr . ')' stmt T_ELSE stmt
+   19 if_stmt_without_else: T_IF '(' expr . ')' stmt
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    T_LOGICAL_AND  shift, and go to state 38
+    T_LOGICAL_OR   shift, and go to state 39
+    '<'            shift, and go to state 40
+    '>'            shift, and go to state 41
+    T_IS_EQ        shift, and go to state 42
+    T_IS_NOT_EQ    shift, and go to state 43
+    '+'            shift, and go to state 44
+    '-'            shift, and go to state 45
+    '*'            shift, and go to state 46
+    '/'            shift, and go to state 47
+    '%'            shift, and go to state 48
+    ')'            shift, and go to state 74
+
+
+State 57
+
+   20 while_stmt: T_WHILE '(' expr . ')' stmt
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    T_LOGICAL_AND  shift, and go to state 38
+    T_LOGICAL_OR   shift, and go to state 39
+    '<'            shift, and go to state 40
+    '>'            shift, and go to state 41
+    T_IS_EQ        shift, and go to state 42
+    T_IS_NOT_EQ    shift, and go to state 43
+    '+'            shift, and go to state 44
+    '-'            shift, and go to state 45
+    '*'            shift, and go to state 46
+    '/'            shift, and go to state 47
+    '%'            shift, and go to state 48
+    ')'            shift, and go to state 75
+
+
+State 58
+
+   11 stmt: '{' stmt_list '}' .
+
+    $default  reduce using rule 11 (stmt)
+
+
+State 59
+
+   36 expr: '(' expr ')' .
+
+    $default  reduce using rule 36 (expr)
+
+
+State 60
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   34     | expr T_LOGICAL_AND expr .
+   35     | expr . T_LOGICAL_OR expr
+
+    '<'          shift, and go to state 40
+    '>'          shift, and go to state 41
+    T_IS_EQ      shift, and go to state 42
+    T_IS_NOT_EQ  shift, and go to state 43
+    '+'          shift, and go to state 44
+    '-'          shift, and go to state 45
+    '*'          shift, and go to state 46
+    '/'          shift, and go to state 47
+    '%'          shift, and go to state 48
+
+    $default  reduce using rule 34 (expr)
+
+
+State 61
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+   35     | expr T_LOGICAL_OR expr .
+
+    '<'          shift, and go to state 40
+    '>'          shift, and go to state 41
+    T_IS_EQ      shift, and go to state 42
+    T_IS_NOT_EQ  shift, and go to state 43
+    '+'          shift, and go to state 44
+    '-'          shift, and go to state 45
+    '*'          shift, and go to state 46
+    '/'          shift, and go to state 47
+    '%'          shift, and go to state 48
+
+    $default  reduce using rule 35 (expr)
+
+
+State 62
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   32     | expr '<' expr .
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    '+'  shift, and go to state 44
+    '-'  shift, and go to state 45
+    '*'  shift, and go to state 46
+    '/'  shift, and go to state 47
+    '%'  shift, and go to state 48
+
+    $default  reduce using rule 32 (expr)
+
+
+State 63
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   33     | expr '>' expr .
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    '+'  shift, and go to state 44
+    '-'  shift, and go to state 45
+    '*'  shift, and go to state 46
+    '/'  shift, and go to state 47
+    '%'  shift, and go to state 48
+
+    $default  reduce using rule 33 (expr)
+
+
+State 64
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   30     | expr T_IS_EQ expr .
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    '+'  shift, and go to state 44
+    '-'  shift, and go to state 45
+    '*'  shift, and go to state 46
+    '/'  shift, and go to state 47
+    '%'  shift, and go to state 48
+
+    $default  reduce using rule 30 (expr)
+
+
+State 65
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   31     | expr T_IS_NOT_EQ expr .
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    '+'  shift, and go to state 44
+    '-'  shift, and go to state 45
+    '*'  shift, and go to state 46
+    '/'  shift, and go to state 47
+    '%'  shift, and go to state 48
+
+    $default  reduce using rule 31 (expr)
+
+
+State 66
+
+   25 expr: expr . '+' expr
+   25     | expr '+' expr .
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    '*'  shift, and go to state 46
+    '/'  shift, and go to state 47
+    '%'  shift, and go to state 48
+
+    $default  reduce using rule 25 (expr)
+
+
+State 67
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   26     | expr '-' expr .
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    '*'  shift, and go to state 46
+    '/'  shift, and go to state 47
+    '%'  shift, and go to state 48
+
+    $default  reduce using rule 26 (expr)
+
+
+State 68
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   27     | expr '*' expr .
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    $default  reduce using rule 27 (expr)
+
+
+State 69
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   28     | expr '/' expr .
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    $default  reduce using rule 28 (expr)
+
+
+State 70
+
+   25 expr: expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   29     | expr '%' expr .
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    $default  reduce using rule 29 (expr)
+
+
+State 71
+
+   24 expr: id '=' expr .
+   25     | expr . '+' expr
+   26     | expr . '-' expr
+   27     | expr . '*' expr
+   28     | expr . '/' expr
+   29     | expr . '%' expr
+   30     | expr . T_IS_EQ expr
+   31     | expr . T_IS_NOT_EQ expr
+   32     | expr . '<' expr
+   33     | expr . '>' expr
+   34     | expr . T_LOGICAL_AND expr
+   35     | expr . T_LOGICAL_OR expr
+
+    T_LOGICAL_AND  shift, and go to state 38
+    T_LOGICAL_OR   shift, and go to state 39
+    '<'            shift, and go to state 40
+    '>'            shift, and go to state 41
+    T_IS_EQ        shift, and go to state 42
+    T_IS_NOT_EQ    shift, and go to state 43
+    '+'            shift, and go to state 44
+    '-'            shift, and go to state 45
+    '*'            shift, and go to state 46
+    '/'            shift, and go to state 47
+    '%'            shift, and go to state 48
+
+    $default  reduce using rule 24 (expr)
+
+
+State 72
+
+    5 declaration: T_VAR id ':' typename ';' .
+
+    $default  reduce using rule 5 (declaration)
+
+
+State 73
+
+   14 stmt: T_PRINT '(' expr ')' . ';'
+
+    ';'  shift, and go to state 76
+
+
+State 74
+
+   18 if_stmt: T_IF '(' expr ')' . stmt T_ELSE stmt
+   19 if_stmt_without_else: T_IF '(' expr ')' . stmt
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    T_VAR                                  shift, and go to state 7
+    T_PRINT                                shift, and go to state 17
+    T_IF                                   shift, and go to state 18
+    T_WHILE                                shift, and go to state 19
+    '{'                                    shift, and go to state 20
+    '('                                    shift, and go to state 21
+
+    declaration           go to state 22
+    stmt                  go to state 77
+    if_stmt               go to state 24
+    if_stmt_without_else  go to state 25
+    while_stmt            go to state 26
+    expr                  go to state 27
+    scalar                go to state 28
+    id                    go to state 29
+
+
+State 75
+
+   20 while_stmt: T_WHILE '(' expr ')' . stmt
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    T_VAR                                  shift, and go to state 7
+    T_PRINT                                shift, and go to state 17
+    T_IF                                   shift, and go to state 18
+    T_WHILE                                shift, and go to state 19
+    '{'                                    shift, and go to state 20
+    '('                                    shift, and go to state 21
+
+    declaration           go to state 22
+    stmt                  go to state 78
+    if_stmt               go to state 24
+    if_stmt_without_else  go to state 25
+    while_stmt            go to state 26
+    expr                  go to state 27
+    scalar                go to state 28
+    id                    go to state 29
+
+
+State 76
+
+   14 stmt: T_PRINT '(' expr ')' ';' .
+
+    $default  reduce using rule 14 (stmt)
+
+
+State 77
+
+   18 if_stmt: T_IF '(' expr ')' stmt . T_ELSE stmt
+   19 if_stmt_without_else: T_IF '(' expr ')' stmt .
+
+    T_ELSE  shift, and go to state 79
+
+    T_ELSE    [reduce using rule 19 (if_stmt_without_else)]
+    $default  reduce using rule 19 (if_stmt_without_else)
+
+
+State 78
+
+   20 while_stmt: T_WHILE '(' expr ')' stmt .
+
+    $default  reduce using rule 20 (while_stmt)
+
+
+State 79
+
+   18 if_stmt: T_IF '(' expr ')' stmt T_ELSE . stmt
+
+    '!'                                    shift, and go to state 12
+    "integer literal (T_INTEGER_LITERAL)"  shift, and go to state 13
+    "double literal (T_DOUBLE_LITERAL)"    shift, and go to state 14
+    "boolean literal (T_BOOLEAN_LITERAL)"  shift, and go to state 15
+    "identifier (T_IDENTIFIER)"            shift, and go to state 10
+    T_VAR                                  shift, and go to state 7
+    T_PRINT                                shift, and go to state 17
+    T_IF                                   shift, and go to state 18
+    T_WHILE                                shift, and go to state 19
+    '{'                                    shift, and go to state 20
+    '('                                    shift, and go to state 21
+
+    declaration           go to state 22
+    stmt                  go to state 80
+    if_stmt               go to state 24
+    if_stmt_without_else  go to state 25
+    while_stmt            go to state 26
+    expr                  go to state 27
+    scalar                go to state 28
+    id                    go to state 29
+
+
+State 80
+
+   18 if_stmt: T_IF '(' expr ')' stmt T_ELSE stmt .
+
+    $default  reduce using rule 18 (if_stmt)

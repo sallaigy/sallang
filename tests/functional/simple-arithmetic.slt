@@ -1,0 +1,17 @@
+%%TEST%%
+
+%DESC "Simple arithmetic for scalar constants"
+%RUN
+
+%%FILE%%
+let
+in
+    print(4 + 3);
+    print(3 * 5);
+    print(6 / 3);
+end
+
+%%EXPECT%%
+7
+15
+2

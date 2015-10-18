@@ -1,0 +1,21 @@
+%%TEST%%
+
+%DESC "Simple arithmetic for two integer variables"
+%RUN
+
+%%FILE%%
+let
+    var a: int;
+    var b: int;
+in
+    a = 4;
+    b = 3;
+    print(a + b);
+    print(a * b);
+    print(a / b);
+end
+
+%%EXPECT%%
+7
+12
+1
