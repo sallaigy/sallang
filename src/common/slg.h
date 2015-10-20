@@ -8,4 +8,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#define SLG_TRY(A, E) if (!(A)) goto E;
+
 #endif

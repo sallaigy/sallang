@@ -50,8 +50,8 @@ $(SLGVM_TARGET): $(SLGVM_OBJECTS)
 $(SLGC_TARGET): $(SLGC_OBJECTS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
-obj/%.o: src/%.c
-	$(CC) -c $(CFLAGS) -o $@ $^
+obj/%.o: src/%.c  $(SLGC_GENERATED_SOURCES)
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 ## SLGC specific ##
 src/parser/scanner.c: src/parser/scanner.l src/parser/parser.c src/parser/parser.h
